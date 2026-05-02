@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import { Calendar, Clock, BookOpen, Plus, Edit2, Trash2, ChevronRight } from 'lucide-react';
 import { PageLayout } from '@/src/components/PageLayout';
 import { cn } from '@/lib/utils';
@@ -280,9 +281,12 @@ export default function CoursesPage() {
                           Concluída
                         </span>
                       )}
-                      <button className="px-4 py-2 bg-orange-upscale hover:bg-orange-upscale-light text-white rounded-lg transition-colors text-sm">
+                      <Link
+                        href={`/courses/${module.id}/${lesson.id}`}
+                        className="px-4 py-2 bg-orange-upscale hover:bg-orange-upscale-light text-white rounded-lg transition-colors text-sm inline-block"
+                      >
                         Assistir
-                      </button>
+                      </Link>
                     </div>
                   ))}
 
