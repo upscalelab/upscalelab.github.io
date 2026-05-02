@@ -14,11 +14,8 @@ export async function POST(
 
     if (body.method === 'assinafy') {
       // Integração com Assinafy
-      // TODO: Implementar chamada à API do Assinafy
-
-      // Exemplo de resposta (você precisa de uma API Key do Assinafy)
       const assinafyApiKey = process.env.ASSINAFY_API_KEY;
-      const assinafyApiUrl = 'https://api.assinafy.com/v1';
+      const assinafyApiUrl = process.env.ASSINAFY_API_URL || 'https://api.assinafy.com/v1';
 
       if (!assinafyApiKey) {
         return NextResponse.json(
@@ -39,15 +36,18 @@ export async function POST(
             documentId: id,
             signers: [
               {
-                email: 'user@example.com', // TODO: Pegar do usuário logado
-                name: 'User Name', // TODO: Pegar do usuário logado
+                email: process.env.NEXT_PUBLIC_ADMIN_EMAIL || 'admin@upscalelab.com.br',
+                name: 'UpScale Lab Admin',
               },
             ],
             callbackUrl: `${process.env.NEXTAUTH_URL}/api/documents/callback`,
+            redirectUrl: `${process.env.NEXTAUTH_URL}/documents`,
           }),
         });
 
         if (!response.ok) {
+          const error = await response.text();
+          console.error('Assinafy API error:', error);
           throw new Error('Erro ao criar sessão de assinatura');
         }
 
@@ -55,8 +55,8 @@ export async function POST(
 
         return NextResponse.json({
           success: true,
-          signatureUrl: data.signatureUrl,
-          sessionId: data.sessionId,
+          signatureUrl: data.signatureUrl || data.redirectUrl,
+          sessionId: data.sessionId || data.id,
         });
       } catch (error) {
         console.error('Assinafy error:', error);
