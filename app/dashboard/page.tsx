@@ -145,6 +145,25 @@ export default function DashboardPage() {
           </div>
         </div>
 
+        {/* Quick Actions */}
+        <div className="bg-dark-card border border-dark-border rounded-xl p-6">
+          <h2 className="text-lg font-bold text-white mb-4">Ações Rápidas</h2>
+          <div className="space-y-2">
+            <a
+              href="/triage"
+              className="block w-full bg-gradient-brand text-white font-semibold py-2 rounded-lg hover:opacity-90 transition-opacity text-center text-sm"
+            >
+              + Nova Triagem
+            </a>
+            <a
+              href="/pipeline"
+              className="block w-full bg-slate-700 hover:bg-slate-600 text-white font-semibold py-2 rounded-lg transition-colors text-center text-sm"
+            >
+              Ver Pipeline
+            </a>
+          </div>
+        </div>
+
         {/* Recent Projects */}
         <div className="bg-dark-card border border-dark-border rounded-xl p-6">
           <h2 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
